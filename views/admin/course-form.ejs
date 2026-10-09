@@ -1,0 +1,59 @@
+<div class="admin-head">
+  <h1><%= course ? 'Edit course' : 'New course' %></h1>
+  <a href="<%= course ? '/admin/courses/' + course.id + '/manage' : '/admin/courses' %>" class="btn btn-ghost">← Back</a>
+</div>
+
+<form method="POST" action="<%= formAction %>" enctype="multipart/form-data" class="card form-card">
+  <label class="field">
+    <span>Course title *</span>
+    <input type="text" name="title" value="<%= course ? course.title : '' %>" required maxlength="160" class="input" placeholder="e.g. Video Editing Mastery">
+  </label>
+  <label class="field">
+    <span>URL slug <small class="muted">(auto-generated from title if left blank)</small></span>
+    <input type="text" name="slug" value="<%= course ? course.slug : '' %>" maxlength="90" class="input" placeholder="video-editing-mastery">
+  </label>
+  <label class="field">
+    <span>Short description <small class="muted">(shown on cards)</small></span>
+    <input type="text" name="short_description" value="<%= course ? course.short_description : '' %>" maxlength="300" class="input" placeholder="One-line summary of the course">
+  </label>
+  <label class="field">
+    <span>Full description</span>
+    <textarea name="description" rows="6" maxlength="20000" class="input" placeholder="What will students learn? Who is it for?"><%= course ? course.description : '' %></textarea>
+  </label>
+  <div class="field-row">
+    <label class="field">
+      <span>Category</span>
+      <input type="text" name="category" value="<%= course ? course.category : '' %>" maxlength="80" class="input" placeholder="e.g. Skills, Business">
+    </label>
+    <label class="field">
+      <span>Price label</span>
+      <input type="text" name="price" value="<%= course ? (course.price || 'Free') : 'Free' %>" maxlength="40" class="input" placeholder="Free">
+    </label>
+    <label class="field">
+      <span>Status</span>
+      <select name="status" class="input">
+        <option value="draft" <%= course && course.status === 'draft' ? 'selected' : '' %>>Draft (hidden)</option>
+        <option value="published" <%= course && course.status === 'published' ? 'selected' : '' %>>Published</option>
+      </select>
+    </label>
+  </div>
+  <label class="field">
+    <span>Thumbnail <small class="muted">(image, max 5MB)</small></span>
+    <input type="file" name="thumbnail" accept="image/jpeg,image/png,image/webp,image/gif" class="input file-input">
+  </label>
+  <% if (course && course.thumbnail_path) { %>
+  <div class="thumb-preview">
+    <img src="/media/thumb/<%= course.id %>" alt="Current thumbnail" width="220">
+    <span class="muted-note">Current thumbnail — upload a new one to replace it.</span>
+  </div>
+  <% } %>
+  <button type="submit" class="btn btn-primary btn-lg"><%= course ? 'Save changes' : 'Create course' %></button>
+</form>
+
+<% if (course) { %>
+<form method="POST" action="/admin/courses/<%= course.id %>/delete" class="card danger-zone" onsubmit="return confirm('Delete this course and ALL its modules, lessons and video files? This cannot be undone.')">
+  <h3>Danger zone</h3>
+  <p class="muted">Deleting a course permanently removes its modules, lessons, enrollments, and uploaded video files.</p>
+  <button type="submit" class="btn btn-danger">Delete course</button>
+</form>
+<% } %>

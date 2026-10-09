@@ -1,0 +1,29 @@
+<div class="admin-head">
+  <h1>Courses</h1>
+  <a href="/admin/courses/new" class="btn btn-primary">＋ New course</a>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>Title</th><th>Category</th><th>Price</th><th>Status</th><th>Lessons</th><th>Students</th><th></th></tr></thead>
+      <tbody>
+        <% courses.forEach(function(c){ %>
+        <tr>
+          <td data-label="Title"><a href="/admin/courses/<%= c.id %>/manage"><strong><%= c.title %></strong></a><br><span class="muted-note">/<%= c.slug %></span></td>
+          <td data-label="Category"><%= c.category || '—' %></td>
+          <td data-label="Price"><%= c.price %></td>
+          <td data-label="Status"><span class="badge badge-<%= c.status %>"><%= c.status %></span></td>
+          <td data-label="Lessons"><%= c.lesson_count %></td>
+          <td data-label="Students"><%= c.student_count %></td>
+          <td class="row-actions">
+            <a href="/admin/courses/<%= c.id %>/manage" class="btn btn-ghost btn-sm">Manage</a>
+            <a href="/admin/courses/<%= c.id %>/edit" class="btn btn-ghost btn-sm">Edit</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% if (!courses.length) { %><p class="muted">No courses yet. <a href="/admin/courses/new">Create your first course</a>.</p><% } %>
+</div>

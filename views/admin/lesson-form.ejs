@@ -1,0 +1,37 @@
+<div class="admin-head">
+  <h1><%= lesson ? 'Edit lesson' : 'New lesson' %></h1>
+  <a href="/admin/courses/<%= lesson ? lesson.course_id : mod.course_id %>/manage" class="btn btn-ghost">← Back to course</a>
+</div>
+
+<p class="muted">Module: <strong><%= lesson ? lesson.module_title : mod.title %></strong> · Course: <strong><%= lesson ? lesson.course_title : mod.course_title %></strong></p>
+
+<form method="POST" action="<%= formAction %>" enctype="multipart/form-data" class="card form-card">
+  <% if (!lesson) { %><input type="hidden" name="module_id" value="<%= mod.id %>"><% } %>
+  <label class="field">
+    <span>Lesson title *</span>
+    <input type="text" name="title" value="<%= lesson ? lesson.title : '' %>" required maxlength="200" class="input" placeholder="e.g. Lesson 1 — Welcome">
+  </label>
+  <label class="field">
+    <span>Lesson description / notes</span>
+    <textarea name="description" rows="5" maxlength="20000" class="input" placeholder="What is covered in this lesson?"><%= lesson ? lesson.description : '' %></textarea>
+  </label>
+  <label class="field">
+    <span>Video file <small class="muted">(mp4 / webm / mov, max 1GB)<%= lesson && lesson.video_path ? ' — current: ' + lesson.video_path : '' %></small></span>
+    <% if (typeof inlineVideo !== 'undefined' && inlineVideo) { %>
+      <p class="muted-note" style="margin:0 0 6px">Direct video upload is disabled on this hosting — upload the video to YouTube as <strong>unlisted</strong> and paste the link below.</p>
+    <% } else { %>
+      <input type="file" name="video" accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov" class="input file-input">
+    <% } %>
+  </label>
+  <div class="or-divider"><span>OR</span></div>
+  <label class="field">
+    <span>External video URL <small class="muted">(e.g. YouTube embed URL)</small></span>
+    <input type="url" name="external_video_url" value="<%= lesson && lesson.external_video_url ? lesson.external_video_url : '' %>" maxlength="500" class="input" placeholder="https://www.youtube.com/embed/…">
+  </label>
+  <label class="field checkbox-field">
+    <input type="checkbox" name="is_free_preview" value="1" <%= lesson && lesson.is_free_preview ? 'checked' : '' %>>
+    <span>Free preview — anyone can watch this lesson without an account</span>
+  </label>
+  <button type="submit" class="btn btn-primary btn-lg"><%= lesson ? 'Save changes' : 'Add lesson' %></button>
+  <p class="muted-note">Large video? See the README section on dedicated video storage — you can switch later without changing lessons.</p>
+</form>

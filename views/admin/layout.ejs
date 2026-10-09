@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= typeof title !== 'undefined' ? title : 'Admin' %> — Earn With Ali Bhai</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+  <aside class="admin-side" id="adminSide">
+    <a href="/admin" class="brand admin-brand">
+      <img src="/images/logo.svg" alt="EA" width="36" height="36">
+      <span class="brand-text">Admin <strong>Panel</strong></span>
+    </a>
+    <nav class="admin-nav" aria-label="Admin">
+      <a href="/admin" class="admin-link">📊 Dashboard</a>
+      <a href="/admin/courses" class="admin-link">📚 Courses</a>
+      <a href="/admin/courses/new" class="admin-link">＋ New Course</a>
+      <a href="/admin/users" class="admin-link">👥 Users</a>
+      <a href="/admin/settings" class="admin-link">⚙ Settings</a>
+    </nav>
+    <div class="admin-side-foot">
+      <a href="/" class="admin-link">← View site</a>
+      <form action="/logout" method="POST"><button type="submit" class="btn btn-ghost btn-sm btn-block">Log out</button></form>
+    </div>
+  </aside>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <button class="nav-toggle admin-toggle" id="adminToggle" aria-label="Toggle admin menu"><span></span><span></span><span></span></button>
+      <span class="admin-crumb"><%= typeof title !== 'undefined' ? title : 'Admin' %></span>
+      <span class="badge badge-admin"><%= currentUser ? currentUser.name : 'Admin' %></span>
+    </div>
+    <div class="admin-content">
+      <%- include('../partials/flash') %>
+      <%- body %>
+    </div>
+  </div>
+</div>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

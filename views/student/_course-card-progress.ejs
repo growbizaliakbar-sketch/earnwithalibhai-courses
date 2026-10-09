@@ -1,0 +1,18 @@
+<a href="/learn/<%= item.course.slug %>" class="course-card reveal">
+  <div class="course-thumb">
+    <% if (item.course.thumbnail_path) { %>
+      <img src="/media/thumb/<%= item.course.id %>" alt="<%= item.course.title %>" loading="lazy">
+    <% } else { %>
+      <div class="course-thumb-fallback"><span>EA</span></div>
+    <% } %>
+    <span class="progress-chip"><%= item.pct %>%</span>
+  </div>
+  <div class="course-body">
+    <h3><%= item.course.title %></h3>
+    <div class="progress"><div class="progress-bar" style="width:<%= item.pct %>%"></div></div>
+    <div class="course-meta">
+      <span><%= item.completed %> / <%= item.total %> lessons</span>
+      <span class="course-price"><%= item.course.price %></span>
+    </div>
+  </div>
+</a>

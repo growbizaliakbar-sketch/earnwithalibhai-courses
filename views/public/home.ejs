@@ -1,0 +1,224 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Earn With Ali Bhai · Learning Platform</span>
+      <h1 class="hero-title">Learn real skills.<br><span class="gold-text">Grow with barakah.</span></h1>
+      <p class="hero-sub">Step-by-step courses that take you from zero to skilled — with honest guidance, practical lessons, and values you can stand behind.</p>
+      <div class="hero-ctas">
+        <a href="/courses" class="btn btn-gold btn-lg">Browse Courses</a>
+        <a href="/signup" class="btn btn-outline-light btn-lg">Create Account</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>300+</strong><span>students mentored</span></div>
+        <div class="hero-stat"><strong><%= stats.courses %></strong><span>courses live</span></div>
+        <div class="hero-stat"><strong><%= stats.lessons %></strong><span>video lessons</span></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal" aria-hidden="true">
+      <div class="hero-card-float">
+        <div class="hero-card-float-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="hero-progress-row"><span>Course progress</span><strong>72%</strong></div>
+        <div class="progress"><div class="progress-bar" style="width:72%"></div></div>
+        <div class="hero-lesson-row"><span class="tick">✓</span><span>Lesson 12 — Complete</span></div>
+        <div class="hero-lesson-row"><span class="tick">✓</span><span>Lesson 13 — Complete</span></div>
+        <div class="hero-lesson-row active"><span class="play">▶</span><span>Lesson 14 — Continue learning</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trustbar">
+  <div class="container trustbar-inner reveal">
+    <span>Faith-grounded</span><i>·</i>
+    <span>Practical skills</span><i>·</i>
+    <span>Step-by-step lessons</span><i>·</i>
+    <span>Honest mentorship</span><i>·</i>
+    <span>Learn at your pace</span>
+  </div>
+</section>
+
+<!-- FEATURED COURSES -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured</span>
+      <h2>Start with our most loved courses</h2>
+      <p>Carefully structured, beginner-friendly, and built for real results.</p>
+    </div>
+    <% if (featured && featured.length) { %>
+    <div class="course-grid">
+      <% featured.forEach(function(c){ %>
+        <%- include('_course-card', { c: c }) %>
+      <% }) %>
+    </div>
+    <div class="center mt"><a href="/courses" class="btn btn-primary">View all courses</a></div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <h3>Courses are on the way</h3>
+      <p>New courses are being prepared. Create an account and we will notify you when they launch.</p>
+      <a href="/signup" class="btn btn-primary">Create account</a>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="section section-dark" id="founder">
+  <div class="container founder-grid">
+    <div class="founder-photo reveal">
+      <img src="/images/founder.jpg" alt="Ali Bhai, Founder" width="420" height="560">
+    </div>
+    <div class="founder-copy reveal">
+      <span class="eyebrow">Meet your mentor</span>
+      <h2>Assalam-o-Alaikum, I'm <span class="gold-text">Ali Bhai</span></h2>
+      <p>I started Earn With Ali Bhai with one belief: students don't need shortcuts — they need real skills, honest guidance, and the patience to grow with tawakkul.</p>
+      <p>I've mentored <strong>300+ students</strong> to build practical skills they can actually use. Every course here is taught the way I wish someone had taught me — clear, step-by-step, and grounded in values.</p>
+      <ul class="check-list">
+        <li>Practical, skill-first teaching — no fluff</li>
+        <li>Faith-grounded approach to work and growth</li>
+        <li>Honest about effort: real skills take real work</li>
+      </ul>
+      <a href="/about" class="btn btn-gold">My full story</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY LEARN WITH US -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why us</span>
+      <h2>Why learn with Ali Bhai?</h2>
+      <p>Not another pile of random videos. A proper learning path, built for students.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">◈</div>
+        <h3>Structured paths</h3>
+        <p>Courses are organized into modules and lessons in the right order — you always know what to learn next.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">✦</div>
+        <h3>Learn at your pace</h3>
+        <p>Watch lessons anytime, on any device. Your progress is saved, so you can pick up exactly where you left off.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">❖</div>
+        <h3>Faith-grounded values</h3>
+        <p>Growth with tawakkul, honesty, and halal principles — success that you can feel good about.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">✚</div>
+        <h3>Mentor support</h3>
+        <p>You're not learning alone. Get guidance, ask questions, and stay accountable on your journey.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU'LL GET -->
+<section class="section section-tint">
+  <div class="container split-grid">
+    <div class="reveal">
+      <span class="eyebrow">Inside every course</span>
+      <h2>What students get</h2>
+      <p>Every enrollment includes the full learning experience — not just videos.</p>
+      <a href="/courses" class="btn btn-primary mt">Explore courses</a>
+    </div>
+    <ul class="check-list big reveal">
+      <li><strong>Step-by-step video lessons</strong> — clear, practical, beginner-friendly</li>
+      <li><strong>Organized modules</strong> — learn in the right sequence, never lost</li>
+      <li><strong>Progress tracking</strong> — see completed and remaining lessons at a glance</li>
+      <li><strong>Continue-learning</strong> — jump back in exactly where you stopped</li>
+      <li><strong>Mobile-friendly</strong> — learn comfortably on your phone</li>
+      <li><strong>Free previews</strong> — watch selected lessons before you commit</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<% if (categories && categories.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Categories</span>
+      <h2>Find your path</h2>
+    </div>
+    <div class="cat-grid">
+      <% categories.forEach(function(cat){ %>
+      <a href="/courses?category=<%= encodeURIComponent(cat.name) %>" class="cat-card reveal">
+        <h3><%= cat.name %></h3>
+        <span><%= cat.course_count %> course<%= cat.course_count == 1 ? '' : 's' %></span>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- TESTIMONIALS -->
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Students</span>
+      <h2>What students say</h2>
+      <p class="muted-note">Sample testimonials — replace with real student feedback.</p>
+    </div>
+    <div class="testi-grid">
+      <figure class="testi-card reveal">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"The lessons are so clear that I finally understood things I had been confused about for months. The step-by-step structure made all the difference."</blockquote>
+        <figcaption><strong>Ahmed R.</strong><span>Student</span></figcaption>
+      </figure>
+      <figure class="testi-card reveal">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"I learn on my phone during my commute. The progress tracking keeps me motivated — I can see exactly how far I've come."</blockquote>
+        <figcaption><strong>Fatima K.</strong><span>Student</span></figcaption>
+      </figure>
+      <figure class="testi-card reveal">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"What I love most is the honesty. No false promises — just real skills, taught with sincerity and good values."</blockquote>
+        <figcaption><strong>Bilal S.</strong><span>Student</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">How do I get access to a course?<span class="faq-plus">+</span></button><div class="faq-a"><p>Create your account and verify your email. Course access is then assigned to your account — contact us and we'll get you enrolled.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I watch lessons on my phone?<span class="faq-plus">+</span></button><div class="faq-a"><p>Yes. The entire platform is mobile-friendly — lessons, dashboard, and progress tracking all work smoothly on phones and tablets.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Do I get a certificate?<span class="faq-plus">+</span></button><div class="faq-a"><p>Your dashboard tracks every completed lesson. Formal certificates are planned — your progress record is already a proof of your effort.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">I forgot my password. What do I do?<span class="faq-plus">+</span></button><div class="faq-a"><p>Use the "Forgot password" link on the login page. You'll receive a secure reset link by email.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Are the courses suitable for beginners?<span class="faq-plus">+</span></button><div class="faq-a"><p>Absolutely. Courses start from the basics and build up step by step — no prior experience needed.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">How do I contact support?<span class="faq-plus">+</span></button><div class="faq-a"><p>Use the contact page or email support@earnwithalibhai.com — we reply as soon as we can, in shaa Allah.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section cta-band">
+  <div class="container cta-inner reveal">
+    <h2>Your skills are your future.<br>Start learning today.</h2>
+    <p>Join 300+ students learning real skills with barakah.</p>
+    <div class="hero-ctas center">
+      <a href="/signup" class="btn btn-gold btn-lg">Create free account</a>
+      <a href="/courses" class="btn btn-outline-light btn-lg">Browse courses</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

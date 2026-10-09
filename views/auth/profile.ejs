@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Account</span>
+    <h1>Your <span class="gold-text">profile</span></h1>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container narrow">
+    <div class="card reveal">
+      <div class="profile-head">
+        <div class="avatar-lg"><%= user.name.charAt(0).toUpperCase() %></div>
+        <div>
+          <h2><%= user.name %></h2>
+          <p class="muted"><%= user.email %></p>
+          <p class="muted-note">Member since <%= new Date(user.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) %> · <%= enrollCount %> course<%= enrollCount == 1 ? '' : 's' %> enrolled</p>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" action="/profile" class="card form-card reveal mt">
+      <h2>Update profile</h2>
+      <label class="field">
+        <span>Full name</span>
+        <input type="text" name="name" value="<%= user.name %>" required maxlength="120" class="input">
+      </label>
+      <h3 class="mt">Change password <span class="muted-note">(optional)</span></h3>
+      <label class="field">
+        <span>Current password</span>
+        <input type="password" name="current_password" class="input" autocomplete="current-password">
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>New password</span>
+          <input type="password" name="new_password" minlength="8" class="input" autocomplete="new-password">
+        </label>
+        <label class="field">
+          <span>Confirm new password</span>
+          <input type="password" name="new_password_confirm" minlength="8" class="input" autocomplete="new-password">
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Save changes</button>
+    </form>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,66 @@
+<div class="admin-head">
+  <h1><%= user.name %></h1>
+  <a href="/admin/users" class="btn btn-ghost">← All users</a>
+</div>
+
+<div class="admin-cols">
+  <div class="card">
+    <h2>User details</h2>
+    <dl class="kv">
+      <dt>Email</dt><dd><%= user.email %></dd>
+      <dt>Role</dt><dd><span class="badge badge-<%= user.role %>"><%= user.role %></span></dd>
+      <dt>Status</dt><dd><span class="badge badge-<%= user.status %>"><%= user.status.replace('_',' ') %></span></dd>
+      <dt>Joined</dt><dd><%= new Date(user.created_at).toLocaleString('en-GB') %></dd>
+      <dt>Last login</dt><dd><%= user.last_login_at ? new Date(user.last_login_at).toLocaleString('en-GB') : '—' %></dd>
+    </dl>
+
+    <h3 class="mt">Change status</h3>
+    <form method="POST" action="/admin/users/<%= user.id %>/status" class="inline-form">
+      <select name="status" class="input">
+        <option value="active" <%= user.status === 'active' ? 'selected' : '' %>>active</option>
+        <option value="disabled" <%= user.status === 'disabled' ? 'selected' : '' %>>disabled</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Update</button>
+    </form>
+
+    <h3 class="mt">Change role</h3>
+    <form method="POST" action="/admin/users/<%= user.id %>/role" class="inline-form">
+      <select name="role" class="input">
+        <option value="student" <%= user.role === 'student' ? 'selected' : '' %>>student</option>
+        <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>admin</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Update</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Enrollments (<%= enrollments.length %>)</h2>
+    <% if (enrollments.length) { %>
+    <ul class="enroll-list">
+      <% enrollments.forEach(function(e){ %>
+      <li>
+        <a href="/admin/courses/<%= e.id %>/manage"><%= e.title %></a>
+        <span class="muted-note"><%= new Date(e.created_at).toLocaleDateString('en-GB') %></span>
+        <form method="POST" action="/admin/users/<%= user.id %>/unenroll" onsubmit="return confirm('Remove access to this course?')">
+          <input type="hidden" name="course_id" value="<%= e.id %>">
+          <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p class="muted">Not enrolled in any course yet.</p>
+    <% } %>
+
+    <h3 class="mt">Enroll in a course</h3>
+    <form method="POST" action="/admin/users/<%= user.id %>/enroll" class="inline-form">
+      <select name="course_id" class="input" required>
+        <option value="">Select course…</option>
+        <% allCourses.forEach(function(c){ %>
+        <option value="<%= c.id %>"><%= c.title %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Enroll</button>
+    </form>
+  </div>
+</div>

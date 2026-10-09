@@ -1,0 +1,93 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="learn-hero">
+  <div class="container learn-hero-inner">
+    <div>
+      <div class="crumbs"><a href="/my-courses">My Courses</a> / <%= course.title %></div>
+      <span class="eyebrow"><%= course.category || 'Course' %></span>
+      <h1><%= course.title %></h1>
+      <% if (course.short_description) { %><p class="lead"><%= course.short_description %></p><% } %>
+      <div class="learn-meta">
+        <span>📚 <%= total %> lessons</span>
+        <span>🗂 <%= modules.length %> modules</span>
+        <% if (enrolled) { %><span>✅ <%= completed %> completed</span><% } %>
+      </div>
+    </div>
+    <div class="learn-thumb">
+      <% if (course.thumbnail_path) { %>
+        <img src="/media/thumb/<%= course.id %>" alt="<%= course.title %>">
+      <% } else { %>
+        <div class="course-thumb-fallback tall"><span>EA</span></div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container">
+    <% if (enrolled) { %>
+    <div class="card progress-summary reveal">
+      <div>
+        <strong>Your progress</strong>
+        <p class="muted-note"><%= completed %> of <%= total %> lessons complete</p>
+      </div>
+      <div class="progress big"><div class="progress-bar" style="width:<%= pct %>%"></div></div>
+      <strong class="pct-label"><%= pct %>%</strong>
+      <% if (resume) { %>
+      <a href="/learn/<%= course.slug %>/l/<%= resume.id %>" class="btn btn-gold"><%= completed ? 'Continue learning' : 'Start course' %></a>
+      <% } %>
+    </div>
+    <% } else { %>
+    <div class="card notice-card reveal">
+      <h3>🔒 You don't have access to this course yet</h3>
+      <p>Course enrollment is assigned by the admin. <a href="/contact">Contact us</a> and tell us which course you want — we'll get you enrolled, in shaa Allah.</p>
+      <p class="muted-note">Free preview lessons (marked below) are still watchable.</p>
+    </div>
+    <% } %>
+
+    <% if (course.description) { %>
+    <div class="prose reveal">
+      <h2>About this course</h2>
+      <% course.description.split(/\n\n+/).forEach(function(p){ %><p><%= p %></p><% }) %>
+    </div>
+    <% } %>
+
+    <h2 class="mt reveal">Curriculum</h2>
+    <div class="modules">
+      <% modules.forEach(function(m, mi){ %>
+      <div class="module-block reveal">
+        <div class="module-head">
+          <span class="module-num"><%= mi + 1 %></span>
+          <h3><%= m.title %></h3>
+          <span class="muted-note"><%= m.lessons.length %> lessons</span>
+        </div>
+        <ul class="lesson-list detailed">
+          <% m.lessons.forEach(function(l){ %>
+          <% const locked = !enrolled && !l.is_free_preview; %>
+          <% const done = enrolled && completedSet.has(l.id); %>
+          <li class="<%= locked ? 'locked' : '' %>">
+            <% if (locked) { %>
+              <span class="lesson-icon">🔒</span>
+              <span class="lesson-title"><%= l.title %></span>
+              <span class="muted-note">Enroll to unlock</span>
+            <% } else { %>
+              <a href="/learn/<%= course.slug %>/l/<%= l.id %>" class="lesson-link">
+                <span class="lesson-icon"><%= done ? '✓' : (l.is_free_preview ? '▶' : '○') %></span>
+                <span class="lesson-title"><%= l.title %></span>
+                <% if (l.is_free_preview) { %><span class="badge badge-preview">Free preview</span><% } %>
+                <% if (l.duration_seconds) { %><span class="lesson-dur"><%= Math.floor(l.duration_seconds/60) %>:<%= String(l.duration_seconds%60).padStart(2,'0') %></span><% } %>
+                <% if (done) { %><span class="badge badge-done">Done</span><% } %>
+              </a>
+            <% } %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

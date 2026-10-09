@@ -1,0 +1,18 @@
+<a href="/courses/<%= c.slug %>" class="course-card reveal">
+  <div class="course-thumb">
+    <% if (c.thumbnail_path) { %>
+      <img src="/media/thumb/<%= c.id %>" alt="<%= c.title %>" loading="lazy">
+    <% } else { %>
+      <div class="course-thumb-fallback"><span>EA</span></div>
+    <% } %>
+    <% if (c.category) { %><span class="badge badge-cat"><%= c.category %></span><% } %>
+  </div>
+  <div class="course-body">
+    <h3><%= c.title %></h3>
+    <% if (c.short_description) { %><p class="course-short"><%= c.short_description %></p><% } %>
+    <div class="course-meta">
+      <span>▶ <%= c.lesson_count %> lesson<%= c.lesson_count == 1 ? '' : 's' %></span>
+      <span class="course-price"><%= c.price %></span>
+    </div>
+  </div>
+</a>

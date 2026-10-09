@@ -1,0 +1,52 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="dash-hero">
+  <div class="container">
+    <span class="eyebrow">Dashboard</span>
+    <h1>Assalam-o-Alaikum, <span class="gold-text"><%= user.name.split(' ')[0] %></span></h1>
+    <p class="lead">Here's your learning at a glance. Keep going — consistency is the key.</p>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card reveal"><strong><%= cards.length %></strong><span>Courses enrolled</span></div>
+      <div class="stat-card reveal"><strong><%= completedLessons %></strong><span>Lessons completed</span></div>
+      <div class="stat-card reveal"><strong><%= avg %>%</strong><span>Average progress</span></div>
+    </div>
+
+    <% if (continueCard) { %>
+    <div class="continue-card reveal">
+      <div>
+        <span class="eyebrow">Continue learning</span>
+        <h2><%= continueCard.course.title %></h2>
+        <p class="muted">Next up: <%= continueCard.lesson.title %></p>
+      </div>
+      <a href="/learn/<%= continueCard.course.slug %>/l/<%= continueCard.lesson.id %>" class="btn btn-gold btn-lg">▶ Resume lesson</a>
+    </div>
+    <% } %>
+
+    <div class="section-head mt reveal">
+      <h2>My courses</h2>
+      <a href="/my-courses" class="btn btn-ghost btn-sm">View all</a>
+    </div>
+    <% if (cards.length) { %>
+    <div class="course-grid">
+      <% cards.forEach(function(item){ %>
+        <%- include('_course-card-progress', { item: item }) %>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <h3>No courses yet</h3>
+      <p>Your enrolled courses will appear here. Contact us to get access to a course.</p>
+      <a href="/contact" class="btn btn-primary">Contact us</a>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,34 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="dash-hero">
+  <div class="container">
+    <span class="eyebrow">Learning</span>
+    <h1>My <span class="gold-text">courses</span></h1>
+    <p class="lead">Everything you're enrolled in, in one place.</p>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container">
+    <% if (cards.length) { %>
+    <div class="course-grid">
+      <% cards.forEach(function(item){ %>
+        <%- include('_course-card-progress', { item: item }) %>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <h3>No courses yet</h3>
+      <p>Browse the course catalog and contact us to get enrolled.</p>
+      <div class="hero-ctas center mt">
+        <a href="/courses" class="btn btn-primary">Browse courses</a>
+        <a href="/contact" class="btn btn-ghost">Contact us</a>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

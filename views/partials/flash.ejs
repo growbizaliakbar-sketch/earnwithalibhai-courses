@@ -1,0 +1,11 @@
+<% const f = typeof flash !== 'undefined' ? flash : null; %>
+<% if (f && (f.success || f.error)) { %>
+<div class="container flash-wrap">
+  <% (f.success || []).forEach(function(m){ %>
+    <div class="flash flash-success" role="status"><span class="flash-icon">✓</span><span><%= m %></span></div>
+  <% }) %>
+  <% (f.error || []).forEach(function(m){ %>
+    <div class="flash flash-error" role="alert"><span class="flash-icon">!</span><span><%= m %></span></div>
+  <% }) %>
+</div>
+<% } %>

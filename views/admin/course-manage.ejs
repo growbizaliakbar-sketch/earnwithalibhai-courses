@@ -1,0 +1,84 @@
+<div class="admin-head">
+  <div>
+    <h1><%= course.title %></h1>
+    <p class="muted-note">/<%= course.slug %> · <span class="badge badge-<%= course.status %>"><%= course.status %></span></p>
+  </div>
+  <div class="row-actions">
+    <a href="/admin/courses/<%= course.id %>/edit" class="btn btn-ghost">Edit details</a>
+    <a href="/admin/courses" class="btn btn-ghost">← Courses</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <h2>Add a module</h2>
+  </div>
+  <form method="POST" action="/admin/courses/<%= course.id %>/modules" class="inline-form">
+    <input type="text" name="title" required maxlength="160" class="input grow" placeholder="Module title, e.g. Getting Started">
+    <button type="submit" class="btn btn-primary">Add module</button>
+  </form>
+</div>
+
+<% modules.forEach(function(m, mi){ %>
+<div class="card module-admin reveal">
+  <div class="module-admin-head">
+    <div>
+      <span class="module-num"><%= mi + 1 %></span>
+      <strong><%= m.title %></strong>
+      <span class="muted-note"><%= m.lessons.length %> lesson<%= m.lessons.length == 1 ? '' : 's' %></span>
+    </div>
+    <div class="row-actions">
+      <form method="POST" action="/admin/modules/<%= m.id %>/move" class="inline">
+        <input type="hidden" name="dir" value="up"><button type="submit" class="btn btn-ghost btn-sm" title="Move up">↑</button>
+      </form>
+      <form method="POST" action="/admin/modules/<%= m.id %>/move" class="inline">
+        <input type="hidden" name="dir" value="down"><button type="submit" class="btn btn-ghost btn-sm" title="Move down">↓</button>
+      </form>
+      <button class="btn btn-ghost btn-sm" onclick="var f=document.getElementById('rename-<%= m.id %>');f.style.display=f.style.display==='none'?'flex':'none'">Rename</button>
+      <form method="POST" action="/admin/modules/<%= m.id %>/delete" class="inline" onsubmit="return confirm('Delete this module and ALL its lessons?')">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+    </div>
+  </div>
+  <form id="rename-<%= m.id %>" method="POST" action="/admin/modules/<%= m.id %>/edit" class="inline-form" style="display:none">
+    <input type="text" name="title" value="<%= m.title %>" required maxlength="160" class="input grow">
+    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+  </form>
+
+  <% if (m.lessons.length) { %>
+  <ul class="lesson-admin-list">
+    <% m.lessons.forEach(function(l){ %>
+    <li>
+      <span class="lesson-icon"><%= l.video_path ? '🎬' : (l.external_video_url ? '🔗' : '📝') %></span>
+      <span class="lesson-title"><%= l.title %></span>
+      <% if (l.is_free_preview) { %><span class="badge badge-preview">Free preview</span><% } %>
+      <% if (l.duration_seconds) { %><span class="muted-note"><%= Math.floor(l.duration_seconds/60) %>m <%= l.duration_seconds%60 %>s</span><% } %>
+      <span class="row-actions">
+        <form method="POST" action="/admin/lessons/<%= l.id %>/move" class="inline">
+          <input type="hidden" name="dir" value="up"><button type="submit" class="btn btn-ghost btn-sm" title="Move up">↑</button>
+        </form>
+        <form method="POST" action="/admin/lessons/<%= l.id %>/move" class="inline">
+          <input type="hidden" name="dir" value="down"><button type="submit" class="btn btn-ghost btn-sm" title="Move down">↓</button>
+        </form>
+        <a href="/admin/lessons/<%= l.id %>/edit" class="btn btn-ghost btn-sm">Edit</a>
+        <form method="POST" action="/admin/lessons/<%= l.id %>/delete" class="inline" onsubmit="return confirm('Delete this lesson?')">
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </span>
+    </li>
+    <% }) %>
+  </ul>
+  <% } else { %>
+  <p class="muted">No lessons in this module yet.</p>
+  <% } %>
+
+  <a href="/admin/lessons/new?module=<%= m.id %>" class="btn btn-gold btn-sm mt">＋ Add lesson</a>
+</div>
+<% }) %>
+
+<% if (!modules.length) { %>
+<div class="empty-state">
+  <h3>No modules yet</h3>
+  <p>Add your first module above, then add lessons to it.</p>
+</div>
+<% } %>

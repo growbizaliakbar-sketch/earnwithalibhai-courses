@@ -1,0 +1,78 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="learn-page">
+  <div class="container learn-layout">
+    <main class="learn-main">
+      <div class="crumbs"><a href="/learn/<%= course.slug %>"><%= course.title %></a> / <%= lesson.module_title %></div>
+      <h1 class="lesson-title-main"><%= lesson.title %></h1>
+
+      <div class="video-wrap reveal">
+        <% if (lesson.video_path) { %>
+          <video id="lessonVideo" class="lesson-video" controls playsinline preload="metadata" src="/media/video/<%= lesson.id %>">
+            Your browser does not support the video tag.
+          </video>
+        <% } else if (lesson.external_video_url) { %>
+          <div class="video-embed">
+            <iframe src="<%= lesson.external_video_url %>" title="<%= lesson.title %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        <% } else { %>
+          <div class="video-none">
+            <p>📝 This is a text lesson — no video attached.</p>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="lesson-actions reveal">
+        <% if (!done) { %>
+        <form method="POST" action="/learn/<%= course.slug %>/l/<%= lesson.id %>/complete">
+          <button type="submit" class="btn btn-primary btn-lg">✓ Mark as complete</button>
+        </form>
+        <% } else { %>
+        <span class="badge badge-done big">✓ Completed</span>
+        <% } %>
+        <div class="prev-next">
+          <% if (prev) { %><a href="/learn/<%= course.slug %>/l/<%= prev.id %>" class="btn btn-ghost">← <%= prev.title.length > 28 ? prev.title.slice(0,28) + '…' : prev.title %></a><% } %>
+          <% if (next) { %><a href="/learn/<%= course.slug %>/l/<%= next.id %>" class="btn btn-primary"><%= next.title.length > 28 ? next.title.slice(0,28) + '…' : next.title %> →</a><% } %>
+        </div>
+      </div>
+
+      <% if (lesson.description) { %>
+      <div class="prose reveal">
+        <h2>Lesson notes</h2>
+        <% lesson.description.split(/\n\n+/).forEach(function(p){ %><p><%= p %></p><% }) %>
+      </div>
+      <% } %>
+    </main>
+
+    <aside class="learn-side">
+      <div class="side-card">
+        <div class="side-head">
+          <h3><%= course.title %></h3>
+          <span class="pct-label"><%= pct %>%</span>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width:<%= pct %>%"></div></div>
+        <div class="side-modules">
+          <% modules.forEach(function(m){ %>
+          <div class="side-module">
+            <h4><%= m.title %></h4>
+            <ul>
+              <% m.lessons.forEach(function(l){ %>
+              <li class="<%= l.id === lesson.id ? 'current' : '' %> <%= completedSet.has(l.id) ? 'done' : '' %>">
+                <a href="/learn/<%= course.slug %>/l/<%= l.id %>">
+                  <span class="tick"><%= completedSet.has(l.id) ? '✓' : (l.id === lesson.id ? '▶' : '○') %></span>
+                  <span><%= l.title %></span>
+                </a>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

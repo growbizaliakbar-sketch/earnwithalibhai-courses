@@ -1,0 +1,30 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="section auth-section">
+  <div class="container narrow-sm">
+    <div class="card auth-card reveal">
+      <div class="auth-head">
+        <img src="/images/logo.svg" alt="EA" width="48" height="48">
+        <h1>Welcome back</h1>
+        <p class="muted">Log in to continue learning.</p>
+      </div>
+      <form method="POST" action="/login">
+        <label class="field">
+          <span>Email address</span>
+          <input type="email" name="email" required maxlength="160" class="input" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" required class="input" autocomplete="current-password">
+        </label>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+      </form>
+      <p class="auth-alt"><a href="/forgot-password">Forgot your password?</a></p>
+      <p class="auth-alt">New here? <a href="/signup">Create an account</a></p>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

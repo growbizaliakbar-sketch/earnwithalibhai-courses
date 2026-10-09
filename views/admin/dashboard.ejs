@@ -1,0 +1,75 @@
+<div class="admin-head">
+  <h1>Dashboard</h1>
+  <a href="/admin/courses/new" class="btn btn-primary">＋ New course</a>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card"><strong><%= stats.users %></strong><span>Total users</span></div>
+  <div class="stat-card"><strong><%= stats.activeStudents %></strong><span>Active students</span></div>
+  <div class="stat-card"><strong><%= stats.courses %></strong><span>Courses</span></div>
+  <div class="stat-card"><strong><%= stats.lessons %></strong><span>Lessons</span></div>
+  <div class="stat-card"><strong><%= stats.enrollments %></strong><span>Enrollments</span></div>
+</div>
+
+<div class="admin-cols">
+  <div class="card">
+    <div class="card-head"><h2>Recent signups</h2><a href="/admin/users" class="btn btn-ghost btn-sm">All users</a></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th></tr></thead>
+        <tbody>
+          <% recentUsers.forEach(function(u){ %>
+          <tr>
+            <td data-label="Name"><a href="/admin/users/<%= u.id %>"><%= u.name %></a></td>
+            <td data-label="Email"><%= u.email %></td>
+            <td data-label="Status"><span class="badge badge-<%= u.status %>"><%= u.status.replace('_',' ') %></span></td>
+            <td data-label="Joined"><%= new Date(u.created_at).toLocaleDateString('en-GB') %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Recent courses</h2><a href="/admin/courses" class="btn btn-ghost btn-sm">All courses</a></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Title</th><th>Status</th><th>Lessons</th><th>Students</th></tr></thead>
+        <tbody>
+          <% recentCourses.forEach(function(c){ %>
+          <tr>
+            <td data-label="Title"><a href="/admin/courses/<%= c.id %>/manage"><%= c.title %></a></td>
+            <td data-label="Status"><span class="badge badge-<%= c.status %>"><%= c.status %></span></td>
+            <td data-label="Lessons"><%= c.lesson_count %></td>
+            <td data-label="Students"><%= c.student_count %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card mt">
+  <div class="card-head"><h2>Recent contact messages</h2></div>
+  <% if (recentContacts.length) { %>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Received</th></tr></thead>
+      <tbody>
+        <% recentContacts.forEach(function(m){ %>
+        <tr>
+          <td data-label="Name"><%= m.name %></td>
+          <td data-label="Email"><%= m.email %></td>
+          <td data-label="Message" class="msg-cell"><%= m.message.length > 120 ? m.message.slice(0,120) + '…' : m.message %></td>
+          <td data-label="Received"><%= new Date(m.created_at).toLocaleDateString('en-GB') %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+  <p class="muted">No messages yet.</p>
+  <% } %>
+</div>

@@ -1,0 +1,76 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="crumbs"><a href="/">Home</a> / <a href="/courses">Courses</a> / <%= course.title %></div>
+    <span class="eyebrow"><%= course.category || 'Course' %></span>
+    <h1><%= course.title %></h1>
+    <% if (course.short_description) { %><p class="lead"><%= course.short_description %></p><% } %>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container detail-grid">
+    <div class="detail-main">
+      <div class="detail-thumb reveal">
+        <% if (course.thumbnail_path) { %>
+          <img src="/media/thumb/<%= course.id %>" alt="<%= course.title %>">
+        <% } else { %>
+          <div class="course-thumb-fallback tall"><span>EA</span></div>
+        <% } %>
+      </div>
+      <div class="prose reveal">
+        <h2>About this course</h2>
+        <% if (course.description) { %>
+          <% course.description.split(/\n\n+/).forEach(function(p){ %><p><%= p %></p><% }) %>
+        <% } else { %>
+          <p>Full course description coming soon.</p>
+        <% } %>
+      </div>
+      <div class="curriculum reveal">
+        <h2>Curriculum <span class="muted-note">(<%= lessonCount %> lessons)</span></h2>
+        <% modules.forEach(function(m){ %>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><%= m.title %> <span class="muted-note"><%= m.lessons.length %> lessons</span><span class="faq-plus">+</span></button>
+          <div class="faq-a">
+            <ul class="lesson-list">
+              <% m.lessons.forEach(function(l){ %>
+              <li>
+                <span class="lesson-icon"><%= l.is_free_preview ? '▶' : '🔒' %></span>
+                <span class="lesson-title"><%= l.title %></span>
+                <% if (l.is_free_preview) { %><span class="badge badge-preview">Free preview</span><% } %>
+                <% if (l.duration_seconds) { %><span class="lesson-dur"><%= Math.floor(l.duration_seconds/60) %>:<%= String(l.duration_seconds%60).padStart(2,'0') %></span><% } %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <aside class="detail-side">
+      <div class="enroll-card reveal">
+        <div class="enroll-price"><%= course.price %></div>
+        <ul class="check-list">
+          <li><%= lessonCount %> video lessons</li>
+          <li><%= modules.length %> structured modules</li>
+          <li>Progress tracking dashboard</li>
+          <li>Learn on any device</li>
+        </ul>
+        <a href="/signup" class="btn btn-gold btn-lg btn-block">Get access</a>
+        <p class="muted-note center">Create your account, then contact us for enrollment.</p>
+      </div>
+      <div class="instructor-card reveal">
+        <img src="/images/founder.jpg" alt="Ali Bhai, Founder" width="72" height="72" class="instructor-photo">
+        <div>
+          <strong>Ali Bhai</strong>
+          <p class="muted-note">Founder &amp; Instructor</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

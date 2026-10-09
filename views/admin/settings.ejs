@@ -1,0 +1,38 @@
+<div class="admin-head">
+  <h1>Settings</h1>
+</div>
+
+<div class="card">
+  <h2>Environment / configuration</h2>
+  <dl class="kv">
+    <dt>Base URL</dt><dd><%= cfg.baseUrl %></dd>
+    <dt>Admin email</dt><dd><%= cfg.adminEmail %></dd>
+    <dt>SMTP email</dt><dd><%= cfg.smtp %></dd>
+    <dt>Session secret</dt><dd><%= cfg.sessionSecret %></dd>
+    <dt>Cookie secure</dt><dd><%= cfg.cookieSecure %></dd>
+    <dt>Port</dt><dd><%= cfg.port %></dd>
+    <dt>Node env</dt><dd><%= cfg.nodeEnv %></dd>
+    <dt>Database</dt><dd><%= cfg.database %></dd>
+    <dt>Storage</dt><dd><%= cfg.storage %></dd>
+  </dl>
+  <p class="muted-note">Set these in your <code>.env</code> file (see <code>.env.example</code>). Restart the app after changes.</p>
+</div>
+
+<div class="card mt">
+  <h2>Email outbox (dev mode)</h2>
+  <% if (smtp) { %>
+    <p class="muted">SMTP is configured — emails are sent for real. The outbox is only available in dev mode.</p>
+  <% } else if (!outbox.length) { %>
+    <p class="muted">Outbox is empty. Sign up a test user to see the verification email here.</p>
+  <% } else { %>
+    <p class="muted-note">Newest first. Copy the verification / reset link from an email to test the flow.</p>
+    <% outbox.forEach(function(m){ %>
+    <details class="outbox-mail">
+      <summary><strong><%= m.subject %></strong> — to <%= m.to %> <span class="muted-note"><%= new Date(m.at).toLocaleString('en-GB') %></span></summary>
+      <div class="outbox-body">
+        <pre><%= m.text %></pre>
+      </div>
+    </details>
+    <% }) %>
+  <% } %>
+</div>

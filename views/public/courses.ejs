@@ -1,0 +1,43 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Courses</span>
+    <h1>Learn skills that <span class="gold-text">actually matter</span></h1>
+    <p class="lead">Structured courses with video lessons, progress tracking, and honest teaching.</p>
+  </div>
+</section>
+
+<section class="section pt-0">
+  <div class="container">
+    <form method="GET" action="/courses" class="filter-bar reveal">
+      <input type="search" name="q" value="<%= q %>" placeholder="Search courses…" class="input" aria-label="Search courses">
+      <select name="category" class="input" aria-label="Filter by category">
+        <option value="">All categories</option>
+        <% categories.forEach(function(cat){ %>
+          <option value="<%= cat %>" <%= cat === selectedCategory ? 'selected' : '' %>><%= cat %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn btn-primary">Search</button>
+      <% if (q || selectedCategory) { %><a href="/courses" class="btn btn-ghost">Clear</a><% } %>
+    </form>
+
+    <% if (courses.length) { %>
+    <div class="course-grid">
+      <% courses.forEach(function(c){ %>
+        <%- include('_course-card', { c: c }) %>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <h3>No courses found</h3>
+      <p>Try a different search, or check back soon — new courses are added regularly.</p>
+      <a href="/courses" class="btn btn-primary">View all courses</a>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

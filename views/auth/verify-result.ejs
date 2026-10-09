@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+
+<section class="section auth-section">
+  <div class="container narrow-sm">
+    <div class="card auth-card reveal center">
+      <div class="result-icon <%= ok ? 'ok' : 'bad' %>"><%= ok ? '✓' : '!' %></div>
+      <h1><%= ok ? 'Verified!' : 'Link problem' %></h1>
+      <p class="muted"><%= message %></p>
+      <div class="hero-ctas center mt">
+        <% if (ok) { %>
+          <a href="/login" class="btn btn-primary">Continue to login</a>
+        <% } else { %>
+          <a href="/signup" class="btn btn-primary">Back to sign up</a>
+          <a href="/forgot-password" class="btn btn-ghost">Reset password</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
