@@ -42,6 +42,14 @@
     });
   }
 
+  // ----- Student sidebar (mobile) -----
+  var studentToggle = document.getElementById('studentToggle');
+  if (studentToggle) {
+    studentToggle.addEventListener('click', function () {
+      document.body.classList.toggle('student-nav-open');
+    });
+  }
+
   // ----- Reveal on scroll -----
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {

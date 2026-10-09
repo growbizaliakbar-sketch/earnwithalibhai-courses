@@ -6,12 +6,45 @@
   <div class="container">
     <span class="eyebrow">Contact</span>
     <h1>Let's <span class="gold-text">talk</span></h1>
-    <p class="lead">Questions about a course, enrollment, or anything else — send a message.</p>
+    <p class="lead">Questions about a course, enrollment, or anything else — reach out.</p>
   </div>
 </section>
 
-<section class="section pt-0">
-  <div class="container split-grid">
+<section class="section">
+  <div class="container contact-grid">
+    <div class="reveal">
+      <div class="wa-card">
+        <h2>Fastest reply: WhatsApp</h2>
+        <p>Message directly and get a personal reply, in shaa Allah.</p>
+        <div class="wa-number">0328-6800979</div>
+        <div class="mt">
+          <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20courses%20ke%20baare%20mein%20maloomat%20chahiye." target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Chat on WhatsApp</a>
+        </div>
+      </div>
+
+      <h2>Follow Ali Bhai</h2>
+      <div class="social-card-list">
+        <a href="https://www.instagram.com/officialali010" target="_blank" rel="noopener" class="social-row-item">
+          <span class="s-ico ig"><%- include('../partials/social-icons', { icon: 'instagram' }) %></span>
+          <span>Instagram<small>@officialali010</small></span>
+        </a>
+        <a href="https://www.tiktok.com/@AliEdits.75" target="_blank" rel="noopener" class="social-row-item">
+          <span class="s-ico tt"><%- include('../partials/social-icons', { icon: 'tiktok' }) %></span>
+          <span>TikTok<small>@AliEdits.75</small></span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61594502295736" target="_blank" rel="noopener" class="social-row-item">
+          <span class="s-ico fb"><%- include('../partials/social-icons', { icon: 'facebook' }) %></span>
+          <span>Facebook<small>Earn With Ali Bhai</small></span>
+        </a>
+      </div>
+
+      <div class="card muted-card mt">
+        <h3>Want course access?</h3>
+        <p>Sign up, verify your email, and tell us which course you want — we'll assign it to your account.</p>
+        <a href="/signup" class="btn btn-gold">Create account</a>
+      </div>
+    </div>
+
     <form method="POST" action="/contact" class="card form-card reveal">
       <h2>Send a message</h2>
       <label class="field">
@@ -27,20 +60,8 @@
         <textarea name="message" required rows="5" maxlength="5000" class="input"></textarea>
       </label>
       <button type="submit" class="btn btn-primary btn-lg btn-block">Send message</button>
+      <p class="muted-note center mt">We usually reply within 1–2 days, in shaa Allah.</p>
     </form>
-    <div class="reveal">
-      <h2>Other ways to reach us</h2>
-      <ul class="check-list big">
-        <li><strong>Email:</strong> support@earnwithalibhai.com</li>
-        <li><strong>Course access:</strong> create an account, then message us to get enrolled</li>
-        <li><strong>Response time:</strong> usually within 1–2 days, in shaa Allah</li>
-      </ul>
-      <div class="card muted-card mt">
-        <h3>Want course access?</h3>
-        <p>Sign up, verify your email, and tell us which course you want — we'll assign it to your account.</p>
-        <a href="/signup" class="btn btn-gold">Create account</a>
-      </div>
-    </div>
   </div>
 </section>
 

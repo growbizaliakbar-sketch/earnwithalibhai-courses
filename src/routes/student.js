@@ -79,8 +79,9 @@ router.get('/dashboard', requireLogin, async (req, res) => {
     if (continueCard) break;
   }
 
-  res.render('student/dashboard', {
+  res.renderStudent('student/dashboard', {
     title: 'Dashboard — Earn With Ali Bhai',
+    activeNav: 'dashboard',
     user,
     cards,
     avg,
@@ -101,7 +102,7 @@ router.get('/my-courses', requireLogin, async (req, res) => {
     const tree = await getCourseTree(c.id, user.id);
     cards.push({ course: c, pct: tree.pct, completed: tree.completed, total: tree.total });
   }
-  res.render('student/my-courses', { title: 'My Courses — Earn With Ali Bhai', cards });
+  res.renderStudent('student/my-courses', { title: 'My Courses — Earn With Ali Bhai', activeNav: 'my-courses', cards });
 });
 
 router.get('/learn/:slug', requireLogin, async (req, res) => {

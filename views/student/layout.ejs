@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= typeof title !== 'undefined' ? title : 'Student' %> — Earn With Ali Bhai</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="student-body">
+<div class="student-shell">
+  <aside class="student-side" id="studentSide">
+    <a href="/" class="student-brand">
+      <img src="/images/logo.svg" alt="EA" width="36" height="36">
+      <span>Earn With <strong>Ali Bhai</strong></span>
+    </a>
+    <% const su = typeof currentUser !== 'undefined' ? currentUser : null; %>
+    <% const spath = typeof activeNav !== 'undefined' ? activeNav : ''; %>
+    <% if (su) { %>
+    <div class="student-user">
+      <span class="avatar-sm"><%= su.name.charAt(0).toUpperCase() %></span>
+      <div>
+        <div class="student-user-name"><%= su.name %></div>
+        <div class="student-user-mail"><%= su.email %></div>
+      </div>
+    </div>
+    <% } %>
+    <nav class="student-nav" aria-label="Student">
+      <a href="/dashboard" class="student-link<%= spath === 'dashboard' ? ' active' : '' %>"><span class="s-ico">▦</span> Dashboard</a>
+      <a href="/my-courses" class="student-link<%= spath === 'my-courses' ? ' active' : '' %>"><span class="s-ico">▶</span> My Courses</a>
+      <a href="/courses" class="student-link"><span class="s-ico">◈</span> All Courses</a>
+      <a href="/profile" class="student-link<%= spath === 'profile' ? ' active' : '' %>"><span class="s-ico">◉</span> Profile</a>
+      <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20course%20support%20chahiye." target="_blank" rel="noopener" class="student-link"><span class="s-ico">✆</span> WhatsApp Support</a>
+    </nav>
+    <div class="student-side-foot">
+      <a href="/" class="student-link"><span class="s-ico">⌂</span> Back to site</a>
+      <form action="/logout" method="POST"><button type="submit" class="btn btn-ghost btn-sm btn-block" style="border-color:rgba(255,255,255,.3);color:#fff;">Log out</button></form>
+    </div>
+  </aside>
+  <div class="student-main">
+    <div class="student-topbar">
+      <button class="nav-toggle student-toggle" id="studentToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <span class="student-crumb"><%= typeof title !== 'undefined' ? title.split(' — ')[0] : 'Student' %></span>
+      <% if (su) { %><span class="avatar-sm"><%= su.name.charAt(0).toUpperCase() %></span><% } %>
+    </div>
+    <div class="student-content">
+      <%- include('../partials/flash') %>
+      <%- body %>
+    </div>
+  </div>
+</div>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

@@ -33,6 +33,47 @@
   </div>
 </section>
 
+<!-- STATS BAND -->
+<section class="stats-band">
+  <div class="container stats-band-inner reveal">
+    <div class="stat-band"><strong>300+</strong><span>students mentored</span></div>
+    <div class="stat-band"><strong><%= stats.courses %></strong><span>courses live</span></div>
+    <div class="stat-band"><strong><%= stats.lessons %></strong><span>video lessons</span></div>
+    <div class="stat-band"><strong>100%</strong><span>honest, practical teaching</span></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Simple process</span>
+      <h2>How it works</h2>
+      <p>Three steps — from signup to skilled.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <h3>Create your account</h3>
+        <p>Sign up free and verify your email. Your personal dashboard and progress tracking are ready instantly.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">2</div>
+        <h3>Get enrolled</h3>
+        <p>Message us on WhatsApp about the course you want. We assign it to your account — simple and personal.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">3</div>
+        <h3>Learn &amp; grow</h3>
+        <p>Watch step-by-step lessons at your pace. Your progress is saved, so you always know what's next.</p>
+      </div>
+    </div>
+    <div class="center mt reveal">
+      <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20course%20mein%20enroll%20hona%20hai." target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Enroll via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
 <!-- TRUST BAR -->
 <section class="trustbar">
   <div class="container trustbar-inner reveal">
@@ -163,30 +204,15 @@
 </section>
 <% } %>
 
-<!-- TESTIMONIALS -->
+<!-- STUDENT SUCCESS -->
 <section class="section section-tint">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Students</span>
-      <h2>What students say</h2>
-      <p class="muted-note">Sample testimonials — replace with real student feedback.</p>
-    </div>
-    <div class="testi-grid">
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <blockquote>"The lessons are so clear that I finally understood things I had been confused about for months. The step-by-step structure made all the difference."</blockquote>
-        <figcaption><strong>Ahmed R.</strong><span>Student</span></figcaption>
-      </figure>
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <blockquote>"I learn on my phone during my commute. The progress tracking keeps me motivated — I can see exactly how far I've come."</blockquote>
-        <figcaption><strong>Fatima K.</strong><span>Student</span></figcaption>
-      </figure>
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <blockquote>"What I love most is the honesty. No false promises — just real skills, taught with sincerity and good values."</blockquote>
-        <figcaption><strong>Bilal S.</strong><span>Student</span></figcaption>
-      </figure>
+  <div class="container center reveal">
+    <span class="eyebrow">Students</span>
+    <h2>Be our next success story</h2>
+    <p class="lead" style="margin:0 auto 1.6rem;">300+ students are already learning real skills with Ali Bhai. Your story starts with one lesson.</p>
+    <div class="hero-ctas center">
+      <a href="/signup" class="btn btn-primary btn-lg">Create free account</a>
+      <a href="/courses" class="btn btn-ghost btn-lg">Browse courses</a>
     </div>
   </div>
 </section>

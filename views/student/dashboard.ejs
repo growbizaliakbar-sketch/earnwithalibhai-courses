@@ -1,52 +1,69 @@
-<%- include('../partials/head') %>
-<%- include('../partials/nav') %>
-<%- include('../partials/flash') %>
-
-<section class="dash-hero">
-  <div class="container">
+<div class="admin-head">
+  <div>
     <span class="eyebrow">Dashboard</span>
     <h1>Assalam-o-Alaikum, <span class="gold-text"><%= user.name.split(' ')[0] %></span></h1>
-    <p class="lead">Here's your learning at a glance. Keep going — consistency is the key.</p>
+    <p class="muted">Here's your learning at a glance. Keep going — consistency is the key.</p>
   </div>
-</section>
+  <a href="/courses" class="btn btn-primary">＋ Browse courses</a>
+</div>
 
-<section class="section pt-0">
-  <div class="container">
-    <div class="stat-grid">
-      <div class="stat-card reveal"><strong><%= cards.length %></strong><span>Courses enrolled</span></div>
-      <div class="stat-card reveal"><strong><%= completedLessons %></strong><span>Lessons completed</span></div>
-      <div class="stat-card reveal"><strong><%= avg %>%</strong><span>Average progress</span></div>
-    </div>
-
-    <% if (continueCard) { %>
-    <div class="continue-card reveal">
-      <div>
-        <span class="eyebrow">Continue learning</span>
-        <h2><%= continueCard.course.title %></h2>
-        <p class="muted">Next up: <%= continueCard.lesson.title %></p>
-      </div>
-      <a href="/learn/<%= continueCard.course.slug %>/l/<%= continueCard.lesson.id %>" class="btn btn-gold btn-lg">▶ Resume lesson</a>
-    </div>
-    <% } %>
-
-    <div class="section-head mt reveal">
-      <h2>My courses</h2>
-      <a href="/my-courses" class="btn btn-ghost btn-sm">View all</a>
-    </div>
-    <% if (cards.length) { %>
-    <div class="course-grid">
-      <% cards.forEach(function(item){ %>
-        <%- include('_course-card-progress', { item: item }) %>
-      <% }) %>
-    </div>
-    <% } else { %>
-    <div class="empty-state reveal">
-      <h3>No courses yet</h3>
-      <p>Your enrolled courses will appear here. Contact us to get access to a course.</p>
-      <a href="/contact" class="btn btn-primary">Contact us</a>
-    </div>
-    <% } %>
+<div class="stat-grid">
+  <div class="stat-card reveal">
+    <div class="stat-ico">📚</div>
+    <strong><%= cards.length %></strong><span>Courses enrolled</span>
   </div>
-</section>
+  <div class="stat-card gold reveal">
+    <div class="stat-ico">✓</div>
+    <strong><%= completedLessons %></strong><span>Lessons completed</span>
+  </div>
+  <div class="stat-card navy reveal">
+    <div class="stat-ico">◈</div>
+    <strong><%= avg %>%</strong><span>Average progress</span>
+  </div>
+</div>
 
-<%- include('../partials/footer') %>
+<% if (continueCard) { %>
+<div class="continue-card reveal">
+  <div>
+    <span class="eyebrow">Continue learning</span>
+    <h2><%= continueCard.course.title %></h2>
+    <p class="muted">Next up: <%= continueCard.lesson.title %></p>
+  </div>
+  <a href="/learn/<%= continueCard.course.slug %>/l/<%= continueCard.lesson.id %>" class="btn btn-gold btn-lg">▶ Resume lesson</a>
+</div>
+<% } %>
+
+<div class="card-head mt reveal">
+  <h2>My courses</h2>
+  <a href="/my-courses" class="btn btn-ghost btn-sm">View all</a>
+</div>
+<% if (cards.length) { %>
+<div class="course-grid">
+  <% cards.forEach(function(item){ %>
+    <%- include('_course-card-progress', { item: item }) %>
+  <% }) %>
+</div>
+<% } else { %>
+<div class="empty-state reveal">
+  <div class="empty-icon">📚</div>
+  <h3>No courses yet</h3>
+  <p>Your enrolled courses will appear here. Message us on WhatsApp and we'll get you enrolled, in shaa Allah.</p>
+  <div class="hero-ctas center mt">
+    <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20course%20mein%20enroll%20hona%20hai." target="_blank" rel="noopener" class="btn btn-whatsapp"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> WhatsApp us</a>
+    <a href="/courses" class="btn btn-primary">Browse courses</a>
+  </div>
+</div>
+<% } %>
+
+<div class="mentor-card reveal">
+  <img src="/images/founder.jpg" alt="Ali Bhai" class="avatar-md" width="96" height="96">
+  <div class="mentor-info">
+    <span class="eyebrow" style="color:var(--gold)">Your mentor</span>
+    <h3>Questions? Talk to Ali Bhai directly.</h3>
+    <p>Stuck on a lesson or need guidance on your learning path? Message directly — no bots, no waiting in ticket queues.</p>
+    <div class="mentor-actions">
+      <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum%20Ali%20Bhai!%20Mujhe%20course%20mein%20help%20chahiye." target="_blank" rel="noopener" class="btn btn-whatsapp"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Chat on WhatsApp</a>
+      <a href="https://www.instagram.com/officialali010" target="_blank" rel="noopener" class="btn btn-outline-light">Instagram</a>
+    </div>
+  </div>
+</div>

@@ -278,7 +278,7 @@ router.post('/reset-password/:token', async (req, res) => {
 router.get('/profile', requireLogin, async (req, res) => {
   const user = await db.get('SELECT * FROM users WHERE id = ?', res.locals.currentUser.id);
   const enrollCount = (await db.get('SELECT COUNT(*) AS n FROM enrollments WHERE user_id = ?', user.id)).n;
-  res.render('auth/profile', { title: 'Your profile', user, enrollCount });
+  res.renderStudent('auth/profile', { title: 'Your profile', activeNav: 'profile', user, enrollCount });
 });
 
 router.post('/profile', requireLogin, async (req, res) => {

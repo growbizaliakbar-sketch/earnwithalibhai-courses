@@ -1,34 +1,26 @@
-<%- include('../partials/head') %>
-<%- include('../partials/nav') %>
-<%- include('../partials/flash') %>
-
-<section class="dash-hero">
-  <div class="container">
+<div class="admin-head">
+  <div>
     <span class="eyebrow">Learning</span>
     <h1>My <span class="gold-text">courses</span></h1>
-    <p class="lead">Everything you're enrolled in, in one place.</p>
+    <p class="muted">Everything you're enrolled in, in one place.</p>
   </div>
-</section>
+  <a href="/courses" class="btn btn-primary">＋ Browse courses</a>
+</div>
 
-<section class="section pt-0">
-  <div class="container">
-    <% if (cards.length) { %>
-    <div class="course-grid">
-      <% cards.forEach(function(item){ %>
-        <%- include('_course-card-progress', { item: item }) %>
-      <% }) %>
-    </div>
-    <% } else { %>
-    <div class="empty-state reveal">
-      <h3>No courses yet</h3>
-      <p>Browse the course catalog and contact us to get enrolled.</p>
-      <div class="hero-ctas center mt">
-        <a href="/courses" class="btn btn-primary">Browse courses</a>
-        <a href="/contact" class="btn btn-ghost">Contact us</a>
-      </div>
-    </div>
-    <% } %>
+<% if (cards.length) { %>
+<div class="course-grid">
+  <% cards.forEach(function(item){ %>
+    <%- include('_course-card-progress', { item: item }) %>
+  <% }) %>
+</div>
+<% } else { %>
+<div class="empty-state reveal">
+  <div class="empty-icon">📚</div>
+  <h3>No courses yet</h3>
+  <p>Browse the course catalog and message us on WhatsApp to get enrolled.</p>
+  <div class="hero-ctas center mt">
+    <a href="/courses" class="btn btn-primary">Browse courses</a>
+    <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20course%20mein%20enroll%20hona%20hai." target="_blank" rel="noopener" class="btn btn-whatsapp"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> WhatsApp us</a>
   </div>
-</section>
-
-<%- include('../partials/footer') %>
+</div>
+<% } %>

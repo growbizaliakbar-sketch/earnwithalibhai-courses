@@ -1,3 +1,5 @@
+<% const waLink = "https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20courses%20ke%20baare%20mein%20maloomat%20chahiye."; %>
+<%- include('whatsapp-float') %>
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
@@ -8,11 +10,15 @@
       <p class="footer-tagline">Learn real skills. Grow with barakah.</p>
       <p class="footer-note">Faith-grounded learning for students who want real skills and honest growth.</p>
       <div class="social-row">
-        <a href="#" class="social-link" aria-label="Instagram">IG</a>
-        <a href="#" class="social-link" aria-label="Facebook">FB</a>
-        <a href="#" class="social-link" aria-label="YouTube">YT</a>
-        <a href="#" class="social-link" aria-label="TikTok">TT</a>
+        <a href="https://www.instagram.com/officialali010" target="_blank" rel="noopener" class="social-link" aria-label="Instagram — @officialali010"><%- include('social-icons', { icon: 'instagram' }) %></a>
+        <a href="https://www.tiktok.com/@AliEdits.75" target="_blank" rel="noopener" class="social-link" aria-label="TikTok — @AliEdits.75"><%- include('social-icons', { icon: 'tiktok' }) %></a>
+        <a href="https://www.facebook.com/profile.php?id=61594502295736" target="_blank" rel="noopener" class="social-link" aria-label="Facebook — Earn With Ali Bhai"><%- include('social-icons', { icon: 'facebook' }) %></a>
+        <a href="<%= waLink %>" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp"><%- include('social-icons', { icon: 'whatsapp' }) %></a>
       </div>
+      <a href="<%= waLink %>" target="_blank" rel="noopener" class="footer-wa">
+        <%- include('social-icons', { icon: 'whatsapp' }) %>
+        <span>0328-6800979</span>
+      </a>
     </div>
     <div class="footer-col">
       <h4>Explore</h4>
@@ -33,6 +39,7 @@
       <a href="/privacy">Privacy Policy</a>
       <a href="/terms">Terms &amp; Conditions</a>
       <p class="footer-contact">support@earnwithalibhai.com</p>
+      <p class="footer-contact">WhatsApp: 0328-6800979</p>
     </div>
   </div>
   <div class="footer-bottom">

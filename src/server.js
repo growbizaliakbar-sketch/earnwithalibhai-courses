@@ -110,6 +110,13 @@ app.use((req, res, next) => {
       res.render('admin/layout', { ...res.locals, ...data, body: html });
     });
   };
+  // Student layout helper: renders a view inside views/student/layout.ejs (sidebar).
+  res.renderStudent = (view, data = {}) => {
+    app.render(view, { ...res.locals, ...data }, (err, html) => {
+      if (err) return next(err);
+      res.render('student/layout', { ...res.locals, ...data, body: html });
+    });
+  };
   next();
 });
 
