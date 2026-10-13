@@ -42,8 +42,16 @@
     <% } else { %>
     <div class="empty-state reveal">
       <h3>No courses found</h3>
-      <p>Try a different search, or check back soon — new courses are added regularly.</p>
+      <% if (q || selectedCategory) { %>
+      <p>Try a different search, or clear the filters to see everything.</p>
       <a href="/courses" class="btn btn-primary">View all courses</a>
+      <% } else { %>
+      <p>Our first courses are being prepared with care. Message us on WhatsApp and we'll notify you personally when they launch.</p>
+      <div class="hero-ctas center">
+        <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20naye%20courses%20ke%20launch%20par%20notify%20karein." target="_blank" rel="noopener" class="btn btn-whatsapp"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Notify me on WhatsApp</a>
+        <a href="/signup" class="btn btn-ghost">Create free account</a>
+      </div>
+      <% } %>
     </div>
     <% } %>
   </div>

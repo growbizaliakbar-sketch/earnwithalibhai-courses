@@ -16,8 +16,9 @@
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><strong>300+</strong><span>students mentored</span></div>
-        <div class="hero-stat"><strong><%= stats.courses %></strong><span>courses live</span></div>
-        <div class="hero-stat"><strong><%= stats.lessons %></strong><span>video lessons</span></div>
+        <% if (stats.courses > 0) { %><div class="hero-stat"><strong><%= stats.courses %></strong><span>courses live</span></div><% } %>
+        <% if (stats.lessons > 0) { %><div class="hero-stat"><strong><%= stats.lessons %></strong><span>video lessons</span></div><% } %>
+        <div class="hero-stat"><strong>100%</strong><span>halal &amp; honest teaching</span></div>
       </div>
     </div>
     <div class="hero-visual reveal" aria-hidden="true">
@@ -30,16 +31,6 @@
         <div class="hero-lesson-row active"><span class="play">▶</span><span>Lesson 14 — Continue learning</span></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- STATS BAND -->
-<section class="stats-band">
-  <div class="container stats-band-inner reveal">
-    <div class="stat-band"><strong>300+</strong><span>students mentored</span></div>
-    <div class="stat-band"><strong><%= stats.courses %></strong><span>courses live</span></div>
-    <div class="stat-band"><strong><%= stats.lessons %></strong><span>video lessons</span></div>
-    <div class="stat-band"><strong>100%</strong><span>honest, practical teaching</span></div>
   </div>
 </section>
 
@@ -101,10 +92,14 @@
     </div>
     <div class="center mt"><a href="/courses" class="btn btn-primary">View all courses</a></div>
     <% } else { %>
-    <div class="empty-state reveal">
-      <h3>Courses are on the way</h3>
-      <p>New courses are being prepared. Create an account and we will notify you when they launch.</p>
-      <a href="/signup" class="btn btn-primary">Create account</a>
+    <div class="empty-state empty-soon reveal">
+      <div class="empty-badge">Coming soon</div>
+      <h3>Something special is on the way</h3>
+      <p>Our first courses are being prepared with care. Be the first to know when they launch — message us and we'll notify you personally.</p>
+      <div class="hero-ctas center">
+        <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20naye%20courses%20ke%20launch%20par%20notify%20karein." target="_blank" rel="noopener" class="btn btn-whatsapp"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Notify me on WhatsApp</a>
+        <a href="/signup" class="btn btn-ghost">Create free account</a>
+      </div>
     </div>
     <% } %>
   </div>

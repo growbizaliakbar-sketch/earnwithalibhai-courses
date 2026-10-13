@@ -850,3 +850,104 @@ a.step-card:hover { text-decoration: none; }
 }
 .chip:hover { text-decoration: none; border-color: var(--emerald); color: var(--emerald); }
 .chip.active { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+
+/* ============================================================
+   PROFESSIONAL POLISH LAYER (13 Oct 2026)
+   Richer hero · refined cards · premium rhythm · credibility fixes
+   ============================================================ */
+
+/* ---------- Brand social buttons (always visible, any background) ---------- */
+.social-link.social-ig { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); color: #fff; }
+.social-link.social-tt { background: #111; color: #fff; }
+.social-link.social-fb { background: #1877F2; color: #fff; }
+.social-link.social-ig:hover, .social-link.social-tt:hover, .social-link.social-fb:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow); color: #fff;
+}
+
+/* ---------- Hero: deeper, richer ---------- */
+.hero {
+  background:
+    radial-gradient(700px 420px at 82% 8%, rgba(201,162,39,0.16), transparent 62%),
+    radial-gradient(760px 520px at 8% 92%, rgba(14,124,91,0.4), transparent 62%),
+    linear-gradient(180deg, #0A1628 0%, #0C1B32 100%);
+  border-bottom: 1px solid rgba(201,162,39,0.22);
+  padding: 5.5rem 0 4.5rem;
+}
+.hero-title { letter-spacing: -0.03em; text-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+.hero-sub { font-size: 1.15rem; }
+.hero-stats { margin-top: 2.4rem; }
+.hero-stat strong { font-size: 1.8rem; letter-spacing: -0.02em; }
+
+/* ---------- Trust bar: premium gradient ---------- */
+.trustbar {
+  background: linear-gradient(90deg, #0A5F46, #0E7C5B 40%, #0E7C5B 60%, #0A5F46);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.trustbar-inner { letter-spacing: 0.02em; }
+
+/* ---------- Premium card treatment ---------- */
+.course-card, .feature-card, .step-card, .cat-card, .card {
+  border: 1px solid rgba(16,42,67,0.08);
+}
+.course-card:hover, .feature-card:hover, .step-card:hover {
+  box-shadow: 0 18px 44px rgba(10,22,40,0.14);
+}
+.feature-card { position: relative; overflow: hidden; }
+.feature-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--emerald));
+  opacity: 0; transition: opacity 0.25s ease;
+}
+.feature-card:hover::before { opacity: 1; }
+
+/* ---------- Section rhythm ---------- */
+.section { padding: 5rem 0; }
+.section-head { margin-bottom: 3rem; }
+.section-head h2 { letter-spacing: -0.03em; }
+
+/* ---------- Footer: gold hairline ---------- */
+.site-footer { border-top: 3px solid var(--gold); }
+.footer-grid { padding-top: 3rem; }
+
+/* ---------- Empty states, premium ---------- */
+.empty-state { padding: 4rem 2rem; border: 1px solid rgba(16,42,67,0.08); }
+.empty-badge {
+  display: inline-block; font-family: var(--font-head); font-weight: 800;
+  font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold-dark); background: var(--gold-soft);
+  border: 1px solid #EAD9A0; border-radius: 999px;
+  padding: 0.45rem 1.1rem; margin-bottom: 1.1rem;
+}
+.empty-soon h3 { font-size: 1.6rem; margin-bottom: 0.6rem; }
+.empty-state .hero-ctas { margin-top: 0.4rem; }
+
+/* ---------- Buttons: refined depth ---------- */
+.btn { letter-spacing: 0.01em; }
+.btn-primary { box-shadow: 0 10px 24px rgba(14,124,91,0.32); }
+.btn-primary:hover { box-shadow: 0 12px 28px rgba(14,124,91,0.4); }
+.btn-gold { box-shadow: 0 10px 24px rgba(201,162,39,0.34); }
+
+/* ---------- Page hero: consistent premium ---------- */
+.page-hero {
+  background:
+    radial-gradient(560px 320px at 82% 18%, rgba(201,162,39,0.16), transparent 62%),
+    linear-gradient(180deg, #0A1628 0%, #0C1B32 100%);
+  border-bottom: 1px solid rgba(201,162,39,0.22);
+  padding: 4rem 0;
+}
+.page-hero h1 { letter-spacing: -0.03em; }
+
+/* ---------- Founder photo: premium frame ---------- */
+.founder-photo img {
+  border: 1px solid rgba(201,162,39,0.5);
+  outline: 6px solid rgba(201,162,39,0.12);
+  outline-offset: -6px;
+}
+
+/* ---------- Nav: crisper ---------- */
+.site-nav { box-shadow: 0 4px 20px rgba(10,22,40,0.06); }
+.nav-link { position: relative; }
+.nav-link:hover::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 2px; border-radius: 2px; background: var(--gold);
+}
