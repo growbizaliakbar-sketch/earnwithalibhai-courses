@@ -24,6 +24,15 @@
       <% if (q || selectedCategory) { %><a href="/courses" class="btn btn-ghost">Clear</a><% } %>
     </form>
 
+    <% if (typeof categories !== 'undefined' && categories.length) { %>
+    <div class="chip-row reveal">
+      <a href="/courses<%= q ? ('?q=' + encodeURIComponent(q)) : '' %>" class="chip<%= !selectedCategory ? ' active' : '' %>">All</a>
+      <% categories.forEach(function(cat){ %>
+        <a href="/courses?category=<%= encodeURIComponent(cat.name || cat) %><%= q ? ('&q=' + encodeURIComponent(q)) : '' %>" class="chip<%= selectedCategory === (cat.name || cat) ? ' active' : '' %>"><%= cat.name || cat %></a>
+      <% }) %>
+    </div>
+    <% } %>
+
     <% if (courses.length) { %>
     <div class="course-grid">
       <% courses.forEach(function(c){ %>

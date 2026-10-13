@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const featured = await db.all(
-    "SELECT c.*, (SELECT COUNT(*) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS lesson_count FROM courses c WHERE c.status = 'published' ORDER BY c.created_at DESC LIMIT 6"
+    "SELECT c.*, (SELECT COUNT(*) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS lesson_count, (SELECT COALESCE(SUM(l.duration_seconds),0) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS total_seconds FROM courses c WHERE c.status = 'published' ORDER BY c.created_at DESC LIMIT 6"
   );
   const categories = db
     .all(
@@ -42,7 +42,8 @@ router.get('/courses', async (req, res) => {
     params.push(cat);
   }
   const courses = await db.all(
-    `SELECT c.*, (SELECT COUNT(*) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS lesson_count
+    `SELECT c.*, (SELECT COUNT(*) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS lesson_count,
+     (SELECT COALESCE(SUM(l.duration_seconds),0) FROM modules m JOIN lessons l ON l.module_id = m.id WHERE m.course_id = c.id) AS total_seconds
      FROM courses c WHERE ${where.join(' AND ')} ORDER BY c.created_at DESC`,
     ...params
   );

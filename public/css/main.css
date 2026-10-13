@@ -839,3 +839,14 @@ a.feature-card p { color: var(--muted); }
 a.step-card { color: var(--ink); display: block; }
 a.step-card:hover { text-decoration: none; }
 .founder-photo a { display: inline-block; }
+.course-mentor { font-size: 0.88rem; color: var(--muted); }
+.mentor-link { color: var(--emerald); font-weight: 700; cursor: pointer; }
+.mentor-link:hover { text-decoration: underline; }
+.chip-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.chip {
+  display: inline-block; padding: 0.5rem 1.1rem; border-radius: 999px;
+  background: var(--card); border: 2px solid var(--line); color: var(--ink);
+  font-weight: 600; font-size: 0.9rem;
+}
+.chip:hover { text-decoration: none; border-color: var(--emerald); color: var(--emerald); }
+.chip.active { background: var(--emerald); border-color: var(--emerald); color: #fff; }

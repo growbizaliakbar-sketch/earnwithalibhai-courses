@@ -101,3 +101,13 @@
     } catch (_) {}
   }
 })();
+
+// ----- Nested clickable spans (e.g. mentor name inside course card link) -----
+document.addEventListener('click', function (e) {
+  var t = e.target.closest('[data-href]');
+  if (t) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = t.getAttribute('data-href');
+  }
+});
