@@ -57,6 +57,15 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '7d', index: false }));
 // NOTE: uploads/ is intentionally NOT served statically — videos go through /media.
 
+// ---------- Asset cache-busting (CSS/JS get ?v= per deploy) ----------
+const ASSET_VERSION = process.env.RENDER_GIT_COMMIT
+  ? String(process.env.RENDER_GIT_COMMIT).slice(0, 8)
+  : String(Date.now());
+app.use((req, res, next) => {
+  res.locals.assetVersion = ASSET_VERSION;
+  next();
+});
+
 // ---------- Sessions ----------
 const sessionSecret = process.env.SESSION_SECRET || 'dev-insecure-secret-change-me';
 if (!process.env.SESSION_SECRET) {
