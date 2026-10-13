@@ -5,7 +5,11 @@
 <section class="page-hero">
   <div class="container">
     <div class="crumbs"><a href="/">Home</a> / <a href="/courses">Courses</a> / <%= course.title %></div>
-    <span class="eyebrow"><%= course.category || 'Course' %></span>
+    <% if (course.category) { %>
+      <a href="/courses?category=<%= encodeURIComponent(course.category) %>" class="eyebrow eyebrow-link"><%= course.category %></a>
+    <% } else { %>
+      <span class="eyebrow">Course</span>
+    <% } %>
     <h1><%= course.title %></h1>
     <% if (course.short_description) { %><p class="lead"><%= course.short_description %></p><% } %>
   </div>
@@ -37,11 +41,19 @@
           <div class="faq-a">
             <ul class="lesson-list">
               <% m.lessons.forEach(function(l){ %>
-              <li>
-                <span class="lesson-icon"><%= l.is_free_preview ? '▶' : '🔒' %></span>
-                <span class="lesson-title"><%= l.title %></span>
-                <% if (l.is_free_preview) { %><span class="badge badge-preview">Free preview</span><% } %>
-                <% if (l.duration_seconds) { %><span class="lesson-dur"><%= Math.floor(l.duration_seconds/60) %>:<%= String(l.duration_seconds%60).padStart(2,'0') %></span><% } %>
+              <li class="<%= l.is_free_preview ? 'has-preview' : '' %>">
+                <% if (l.is_free_preview) { %>
+                  <a href="<%= (typeof currentUser !== 'undefined' && currentUser) ? ('/learn/' + course.slug + '/l/' + l.id) : '/login' %>" class="lesson-link">
+                    <span class="lesson-icon">▶</span>
+                    <span class="lesson-title"><%= l.title %></span>
+                    <span class="badge badge-preview">Free preview</span>
+                    <% if (l.duration_seconds) { %><span class="lesson-dur"><%= Math.floor(l.duration_seconds/60) %>:<%= String(l.duration_seconds%60).padStart(2,'0') %></span><% } %>
+                  </a>
+                <% } else { %>
+                  <span class="lesson-icon">🔒</span>
+                  <span class="lesson-title"><%= l.title %></span>
+                  <% if (l.duration_seconds) { %><span class="lesson-dur"><%= Math.floor(l.duration_seconds/60) %>:<%= String(l.duration_seconds%60).padStart(2,'0') %></span><% } %>
+                <% } %>
               </li>
               <% }) %>
             </ul>
@@ -59,16 +71,22 @@
           <li>Progress tracking dashboard</li>
           <li>Learn on any device</li>
         </ul>
-        <a href="/signup" class="btn btn-gold btn-lg btn-block">Get access</a>
-        <p class="muted-note center">Create your account, then contact us for enrollment.</p>
+        <% const _cu = (typeof currentUser !== 'undefined' && currentUser) ? currentUser : null; %>
+        <% if (_cu) { %>
+          <a href="https://wa.me/923286800979?text=Assalam-o-Alaikum!%20Mujhe%20<%= encodeURIComponent(course.title) %>%20mein%20enroll%20hona%20hai." target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg btn-block"><%- include('../partials/social-icons', { icon: 'whatsapp' }) %> Enroll via WhatsApp</a>
+          <p class="muted-note center">Message us and we'll assign this course to your account.</p>
+        <% } else { %>
+          <a href="/signup" class="btn btn-gold btn-lg btn-block">Get access</a>
+          <p class="muted-note center">Create your account, then contact us for enrollment.</p>
+        <% } %>
       </div>
-      <div class="instructor-card reveal">
+      <a href="/about" class="instructor-card reveal">
         <img src="/images/founder.jpg" alt="Ali Bhai, Founder" width="72" height="72" class="instructor-photo">
         <div>
           <strong>Ali Bhai</strong>
           <p class="muted-note">Founder &amp; Instructor</p>
         </div>
-      </div>
+      </a>
     </aside>
   </div>
 </section>

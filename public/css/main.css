@@ -825,3 +825,17 @@ html.js .reveal.visible { opacity: 1; transform: none; }
   .wa-float { width: 54px; height: 54px; right: 16px; bottom: 16px; }
   .wa-float svg { width: 28px; height: 28px; }
 }
+
+/* ---------- Clickability upgrades (13 Oct 2026) ---------- */
+a.instructor-card { color: var(--ink); transition: transform 0.15s ease, box-shadow 0.2s ease; border-radius: var(--radius); }
+a.instructor-card:hover { text-decoration: none; transform: translateY(-2px); }
+a.instructor-card .muted-note { margin: 0; }
+.eyebrow-link:hover { text-decoration: underline; }
+.lesson-list li.has-preview { padding: 0; }
+.lesson-list li.has-preview .lesson-link { padding: 0.75rem 0; }
+a.feature-card { color: var(--ink); display: block; }
+a.feature-card:hover { text-decoration: none; }
+a.feature-card p { color: var(--muted); }
+a.step-card { color: var(--ink); display: block; }
+a.step-card:hover { text-decoration: none; }
+.founder-photo a { display: inline-block; }
