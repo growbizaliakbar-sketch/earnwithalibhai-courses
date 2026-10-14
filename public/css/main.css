@@ -951,3 +951,111 @@ a.step-card:hover { text-decoration: none; }
   content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
   height: 2px; border-radius: 2px; background: var(--gold);
 }
+
+/* ============================================================
+   LIGHT PROFESSIONAL THEME (14 Oct 2026)
+   Clean, airy, trustworthy — Coursera/Udemy-grade light theme.
+   Emerald primary · gold accent · navy ink. Footer stays navy.
+   ============================================================ */
+
+/* ---------- Hero: light & airy ---------- */
+.hero {
+  background:
+    radial-gradient(640px 380px at 88% 12%, rgba(201,162,39,0.14), transparent 62%),
+    radial-gradient(720px 480px at 6% 88%, rgba(14,124,91,0.10), transparent 62%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F8F6 100%);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.hero .eyebrow { color: var(--emerald); }
+.hero-title { color: var(--navy); text-shadow: none; }
+.hero-title .gold-text, .hero .gold-text { color: var(--gold-dark); }
+.hero-sub { color: var(--muted); }
+.hero-stat strong { color: var(--emerald); }
+.hero-stat span { color: var(--muted); }
+.hero-card-float {
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(10,22,40,0.12);
+}
+
+/* ---------- Former dark sections: now light ---------- */
+.section-dark {
+  background: #FFFFFF;
+  color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.section-dark h2, .section-dark h3 { color: var(--navy); }
+.section-dark p { color: var(--muted); }
+.section-dark .eyebrow { color: var(--emerald); }
+.section-dark .gold-text { color: var(--gold-dark); }
+.section-dark .check-list li::before {
+  background: var(--emerald-soft);
+  color: var(--emerald-dark);
+}
+.section-dark .check-list strong { color: var(--ink); }
+
+/* ---------- Page heroes: light ---------- */
+.page-hero {
+  background:
+    radial-gradient(560px 300px at 85% 20%, rgba(14,124,91,0.10), transparent 62%),
+    radial-gradient(420px 260px at 12% 80%, rgba(201,162,39,0.10), transparent 60%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F8F6 100%);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.page-hero::after { display: none; }
+.page-hero h1 { color: var(--navy); }
+.page-hero h1 .gold-text { color: var(--gold-dark); }
+.page-hero .lead { color: var(--muted); }
+.page-hero .eyebrow { color: var(--emerald); }
+.crumbs { color: var(--muted); }
+.crumbs a { color: var(--emerald); }
+
+/* ---------- CTA band: the one bold color moment ---------- */
+.cta-band {
+  background: linear-gradient(120deg, #0A5F46 0%, #0E7C5B 55%, #12A37B 100%);
+}
+.cta-inner h2 { color: #fff; }
+.cta-inner p { color: #D9EFE7; }
+
+/* ---------- Outline button for light backgrounds ---------- */
+.btn-outline {
+  background: transparent;
+  border: 2px solid #C7D2DE;
+  color: var(--navy);
+}
+.btn-outline:hover {
+  border-color: var(--emerald);
+  color: var(--emerald);
+  text-decoration: none;
+}
+
+/* ---------- Trust bar: keep, slightly refined ---------- */
+.trustbar {
+  background: linear-gradient(90deg, #0B6A4E, #0E7C5B 50%, #0B6A4E);
+}
+
+/* ---------- Section rhythm on light theme ---------- */
+.section { padding: 4.5rem 0; }
+.section-tint { background: #F2F6F9; }
+
+/* ---------- Cards: crisper on white ---------- */
+.course-card, .feature-card, .step-card, .card, .empty-state {
+  border: 1px solid #E3E9F1;
+  box-shadow: 0 6px 22px rgba(10,22,40,0.06);
+}
+.course-card:hover, .feature-card:hover, .step-card:hover {
+  box-shadow: 0 16px 40px rgba(10,22,40,0.12);
+}
+
+/* ---------- Founder photo frame on light ---------- */
+.section-dark .founder-photo img {
+  border: 1px solid #E3E9F1;
+  outline: 8px solid #F4F8F6;
+  outline-offset: -8px;
+  box-shadow: 0 24px 60px rgba(10,22,40,0.12);
+}
+
+/* ---------- Footer stays navy (anchor) ---------- */
+.site-footer { background: #0A1628; }
