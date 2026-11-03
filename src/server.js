@@ -63,6 +63,7 @@ const ASSET_VERSION = process.env.RENDER_GIT_COMMIT
   : String(Date.now());
 app.use((req, res, next) => {
   res.locals.assetVersion = ASSET_VERSION;
+  res.locals.canonicalPath = req.path;
   next();
 });
 

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /my-courses
+Disallow: /learn/
+Disallow: /profile
+Disallow: /set-password/
+Disallow: /verify/
+
+Sitemap: https://earnwithalibhai-courses.onrender.com/sitemap.xml

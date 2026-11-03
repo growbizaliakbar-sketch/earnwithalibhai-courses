@@ -1059,3 +1059,18 @@ a.step-card:hover { text-decoration: none; }
 
 /* ---------- Footer stays navy (anchor) ---------- */
 .site-footer { background: #0A1628; }
+
+/* ============================================================
+   PLUGIN OPTIMIZATION LAYER (3 Nov 2026)
+   Hallmark floor: instant :focus-visible · UI-UX Pro Max: focus clarity
+   ============================================================ */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--emerald);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.btn:focus-visible, .chip:focus-visible, .social-link:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}

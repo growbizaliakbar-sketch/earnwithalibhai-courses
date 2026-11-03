@@ -2,11 +2,21 @@
 'use strict';
 
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const db = require('../db');
 const { wrapRouter } = require('../asyncHandler');
 const { sendMail, smtpConfigured } = require('../mailer');
 
 const router = express.Router();
+
+// Spam guard for the public contact form (no CAPTCHA keys configured;
+// 5 submissions per IP per 15 minutes is generous for real visitors).
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 router.get('/', async (req, res) => {
   const featured = await db.all(
@@ -84,7 +94,7 @@ router.get('/contact', async (req, res) => {
   res.render('public/contact', { title: 'Contact — Earn With Ali Bhai' });
 });
 
-router.post('/contact', async (req, res) => {
+router.post('/contact', contactLimiter, async (req, res) => {
   const name = (req.body.name || '').trim().slice(0, 120);
   const email = (req.body.email || '').trim().slice(0, 160);
   const message = (req.body.message || '').trim().slice(0, 5000);
