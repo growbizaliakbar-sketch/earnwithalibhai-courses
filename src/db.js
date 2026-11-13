@@ -162,14 +162,33 @@ async function initSchema() {
   const stmts = schemaStatements();
   if (mode === 'local') {
     for (const s of stmts) localDb.exec(s);
-    return;
+  } else {
+    try {
+      await turso.execute('PRAGMA foreign_keys = ON');
+    } catch (_) {
+      // best-effort; some remotes ignore PRAGMA
+    }
+    await turso.batch(stmts.map((sql) => ({ sql, args: [] })));
   }
-  try {
-    await turso.execute('PRAGMA foreign_keys = ON');
-  } catch (_) {
-    // best-effort; some remotes ignore PRAGMA
+  await migrate();
+}
+
+// Lightweight migrations for columns added after the initial schema.
+// ALTER ... ADD COLUMN throws when the column already exists — ignore that.
+async function migrate() {
+  const alters = [
+    // Auth lockout (reel item 05): failed-login counter + lockout deadline.
+    'ALTER TABLE users ADD COLUMN failed_logins INTEGER NOT NULL DEFAULT 0',
+    'ALTER TABLE users ADD COLUMN locked_until TEXT',
+  ];
+  for (const sql of alters) {
+    try {
+      if (mode === 'local') localDb.exec(sql);
+      else await turso.execute(sql);
+    } catch (_) {
+      // Column already exists — safe to ignore.
+    }
   }
-  await turso.batch(stmts.map((sql) => ({ sql, args: [] })));
 }
 
 // Resolves when the schema is ready. Rejects with a clear, credential-free

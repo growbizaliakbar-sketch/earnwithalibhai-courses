@@ -68,19 +68,32 @@ app.use((req, res, next) => {
 });
 
 // ---------- Sessions ----------
-const sessionSecret = process.env.SESSION_SECRET || 'dev-insecure-secret-change-me';
-if (!process.env.SESSION_SECRET) {
+// The session secret signs every session cookie. There must be no usable
+// fallback in production: 'dev-insecure-secret-change-me' is a publicly
+// known string (it lives in this repo), so starting without a real secret
+// would let anyone forge a session. Refuse to boot instead.
+const baseUrl = process.env.BASE_URL || '';
+const sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+  const mustHaveSecret =
+    process.env.NODE_ENV === 'production' || baseUrl.toLowerCase().startsWith('https://');
+  if (mustHaveSecret) {
+    // eslint-disable-next-line no-console
+    console.error(
+      '[FATAL] SESSION_SECRET is not set — refusing to start with the insecure dev default. Set SESSION_SECRET in your environment before deploying.'
+    );
+    process.exit(1);
+  }
   // eslint-disable-next-line no-console
   console.warn('[WARN] SESSION_SECRET not set — using insecure dev default. Set it in production.');
 }
-const baseUrl = process.env.BASE_URL || '';
 const cookieSecure =
   process.env.COOKIE_SECURE === '1' || baseUrl.toLowerCase().startsWith('https://');
 
 app.use(
   session({
     name: 'eabh.sid',
-    secret: sessionSecret,
+    secret: sessionSecret || 'dev-insecure-secret-change-me',
     resave: false,
     saveUninitialized: false,
     rolling: true,

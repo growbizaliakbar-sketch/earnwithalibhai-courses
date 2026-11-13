@@ -9,6 +9,7 @@ const db = require('../db');
 const { wrapRouter } = require('../asyncHandler');
 const { sendMail } = require('../mailer');
 const { generateToken, hashToken, tokenEquals } = require('../tokens');
+const { revokeSessionsForUser } = require('../sessionStore');
 const { requireLogin } = require('../auth');
 
 const router = express.Router();
@@ -33,6 +34,30 @@ const authLimiter = rateLimit({
 
 const GENERIC_SIGNUP_MSG = 'If this email is registered, check your inbox for next steps.';
 const GENERIC_FORGOT_MSG = 'If an account exists for this email, a reset link has been sent.';
+
+// Per-account lockout (reel item 05): the per-IP loginLimiter alone does not
+// stop a slow brute-force against one account. 5 wrong passwords lock the
+// account for 15 minutes. The message stays generic so a lockout never
+// reveals whether an email is registered.
+const MAX_FAILED_LOGINS = 5;
+const LOCKOUT_MS = 15 * 60 * 1000;
+
+async function recordFailedLogin(user) {
+  try {
+    const failed = (user.failed_logins || 0) + 1;
+    if (failed >= MAX_FAILED_LOGINS) {
+      await db.run(
+        'UPDATE users SET failed_logins = 0, locked_until = ? WHERE id = ?',
+        new Date(Date.now() + LOCKOUT_MS).toISOString(),
+        user.id
+      );
+    } else {
+      await db.run('UPDATE users SET failed_logins = ? WHERE id = ?', failed, user.id);
+    }
+  } catch (err) {
+    console.error('failed-login tracking failed:', err.message);
+  }
+}
 
 function baseUrl(req) {
   return (process.env.BASE_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
@@ -133,7 +158,7 @@ router.get('/verify/:token', authLimiter, async (req, res) => {
 });
 
 // ---------- Set password (first time) ----------
-router.get('/set-password/:token', async (req, res) => {
+router.get('/set-password/:token', authLimiter, async (req, res) => {
   const { row, error } = await lookupToken(req.params.token, 'set_password');
   if (error) {
     return res.status(400).render('auth/verify-result', {
@@ -145,7 +170,7 @@ router.get('/set-password/:token', async (req, res) => {
   res.render('auth/set-password', { title: 'Set your password', token: req.params.token, name: row.name });
 });
 
-router.post('/set-password/:token', async (req, res) => {
+router.post('/set-password/:token', authLimiter, async (req, res) => {
   const { row, error } = await lookupToken(req.params.token, 'set_password');
   if (error) {
     return res.status(400).render('auth/verify-result', { title: 'Link expired', ok: false, message: error });
@@ -193,8 +218,17 @@ router.post('/login', loginLimiter, async (req, res) => {
   if (user.status === 'disabled') return fail('This account is disabled. Please contact support.');
   if (user.status === 'pending_verification' || user.status === 'email_verified')
     return fail('Please verify your email and set your password before logging in.');
+  if (user.locked_until && new Date(user.locked_until).getTime() > Date.now()) {
+    return fail('Invalid email or password.');
+  }
   const ok = await bcrypt.compare(password, user.password_hash);
-  if (!ok) return fail('Invalid email or password.');
+  if (!ok) {
+    await recordFailedLogin(user);
+    return fail('Invalid email or password.');
+  }
+  if (user.failed_logins || user.locked_until) {
+    await db.run('UPDATE users SET failed_logins = 0, locked_until = NULL WHERE id = ?', user.id);
+  }
   req.session.regenerate(async (err) => {
     if (err) return fail('Could not start a session. Please try again.');
     req.session.userId = user.id;
@@ -246,7 +280,7 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
 });
 
 // ---------- Reset password ----------
-router.get('/reset-password/:token', async (req, res) => {
+router.get('/reset-password/:token', authLimiter, async (req, res) => {
   const { error } = await lookupToken(req.params.token, 'reset');
   if (error) {
     return res.status(400).render('auth/verify-result', { title: 'Link expired', ok: false, message: error });
@@ -254,7 +288,7 @@ router.get('/reset-password/:token', async (req, res) => {
   res.render('auth/reset-password', { title: 'Reset password', token: req.params.token });
 });
 
-router.post('/reset-password/:token', async (req, res) => {
+router.post('/reset-password/:token', authLimiter, async (req, res) => {
   const { row, error } = await lookupToken(req.params.token, 'reset');
   if (error) {
     return res.status(400).render('auth/verify-result', { title: 'Link expired', ok: false, message: error });
@@ -270,6 +304,14 @@ router.post('/reset-password/:token', async (req, res) => {
   await db.run('UPDATE users SET password_hash = ? WHERE id = ?', hash, row.user_id);
   // Invalidate ALL reset tokens for this user (single-use, session hijack safety).
   await db.run("UPDATE email_tokens SET used_at = COALESCE(used_at, ?) WHERE user_id = ? AND purpose = 'reset'", db.now(), row.user_id);
+  // Reel item 16: kill every session this user had — a stolen session must
+  // not survive a password reset.
+  await revokeSessionsForUser(row.user_id);
+  // The session that made this request would otherwise be re-saved by
+  // express-session (rolling cookies) and come back to life — drop the
+  // userId from it so this browser is logged out too. The flash above
+  // survives in the now-anonymous session.
+  if (req.session) delete req.session.userId;
   req.flash('success', 'Password updated — please log in with your new password.');
   res.redirect('/login');
 });
@@ -302,7 +344,9 @@ router.post('/profile', requireLogin, async (req, res) => {
     else {
       const hash = await bcrypt.hash(nw, 12);
       await db.run('UPDATE users SET password_hash = ? WHERE id = ?', hash, uid);
-      req.flash('success', 'Profile and password updated.');
+      // Reel item 16: sign this user out everywhere else (keep this session).
+      await revokeSessionsForUser(uid, req.sessionID);
+      req.flash('success', 'Profile and password updated. Other devices have been signed out.');
       return res.redirect('/profile');
     }
     return res.redirect('/profile');

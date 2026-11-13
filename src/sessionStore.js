@@ -68,3 +68,23 @@ class SQLiteStore extends Store {
 }
 
 module.exports = SQLiteStore;
+
+// Revoke every stored session that belongs to a user (e.g. after a password
+// reset, so a stolen session cannot survive it). Pass exceptSid to keep one
+// session alive — the session that just changed its own password.
+async function revokeSessionsForUser(userId, exceptSid) {
+  const rows = await db.all('SELECT session_id, data FROM sessions');
+  for (const row of rows) {
+    if (exceptSid && row.session_id === exceptSid) continue;
+    try {
+      const data = JSON.parse(row.data);
+      if (data && data.userId === userId) {
+        await db.run('DELETE FROM sessions WHERE session_id = ?', row.session_id);
+      }
+    } catch (_) {
+      // Unparseable session row — leave it to the expiry pruner.
+    }
+  }
+}
+
+module.exports.revokeSessionsForUser = revokeSessionsForUser;
